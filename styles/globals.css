@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  position: relative;
 }
 
 a {
@@ -11,16 +12,45 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+/* alignment of width, height css start */
+.w-25 {
+  width: 25%;
+  padding: 10 15px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* alignment of width, height css start */
+
+
+/* font css start */
+.text-center {
+text-align: center
+}
+/* font css end */
+
+
+/* footer css start */
+.footer {
+  display: flex;
+  color: #fafafa;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+.footer p {
+  justify-content: center;
+}
+/* footer css end*/
+
+
+/* device dark theme */
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
   body {
     color: white;
-    background: black;
   }
-}
+} */
