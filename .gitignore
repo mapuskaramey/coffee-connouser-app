@@ -1,7 +1,11 @@
+# Build packages
 node_modules
+.next
 
+
+# package-lock file
 package-lock.json
 
-tsconfig.json
 
-.next
+# configurations
+tsconfig.json

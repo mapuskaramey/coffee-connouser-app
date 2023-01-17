@@ -54,7 +54,20 @@ grid-template-columns: repeat(3,minmax(0,1fr))
 margin: 12px;
 }
 
-
+#cardSingle {
+    position: relative;
+    width: 25%;
+    margin: 2em;
+    padding: 2em;
+}
+#cardSingle a {
+    display: block;
+    width: 100%;
+}
+#cardSingle .card {
+    padding: 2em;
+    width: calc(100% - 2%);
+}
 
 /* media query css */
 @media (max-width:992px) {
