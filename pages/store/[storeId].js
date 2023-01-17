@@ -8,14 +8,22 @@ import cardStyle from '../../styles/card.module.css'
 
 export async function getStaticPaths () {
    /* set dyanamic paths & remove manually updates */
+   /** 
+    * Note: fallback-false then any path not return by getStaticPath() will return 404 page
+    * */ 
+
+   const paths = coffeeStoreData.map(store => {
     return {
-                paths: [
-                            {params: {storeId: '0'} },
-                            {params: {storeId: '1'} },
-                            {params: {storeId: '300'} }
-                        ],
-                fallback: false
+                params:  {
+                            storeId: store.storeId 
+                        }
             }
+   })
+
+    return {
+        paths,
+        fallback: false
+    }
 }
 
 
@@ -31,6 +39,7 @@ export function getStaticProps (coffeeStore) {
 }
 
 export default function storeId ({coffeeStore}) {
+    // console.log(getStaticPaths.fallback);
     return (
                 <>
                     <a href="http://localhost:3000/"> 
