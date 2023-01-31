@@ -10,22 +10,31 @@ import CoffeeStoresData from '../data/coffee-stores.json'
 
 import cls from 'classnames'
 
+import SEO from '../components/seo'
+import { getCoffeeStores } from '../lib/coffee-store.js'
+
+
 /* pre-render content @build time using props returned by getStaticProps() */
 export async function getStaticProps() {
+
+    /** coffee connouiser api configuration */
+    let FSQData = await getCoffeeStores()
+
     return {
         props: {
-            CoffeeStores: CoffeeStoresData
+            coffeeStores: FSQData
         }
     }
 }
 
 /**  client side  */
 export default function Home(props) {
-    
+let boxes = props.coffeeStores
   return (
         <div className={styles.container}>
             <main className={styles.main}>
-                <Header title="Coffee connouiser store"/>
+                <SEO 
+                title="coffeee connouiser app | Home"/>
                 <div className={styles.homeBannerWrapper}>
                     <div className={styles.left}>
                         <h1 className={styles.title}>
@@ -48,13 +57,14 @@ export default function Home(props) {
                     <h2 className={CardStyle.boxName}>Coffee connouiser stores @ Dadar</h2>
                     <div className={cls(`text-center ${CardStyle.cardLayout}`)}>
                         {
-                            props.CoffeeStores.map(coffeeStore => {
+                            boxes.map(box => {
                                     return  (
                                                 <Card
-                                                    id={coffeeStore.storeId}
-                                                    imgUrl={coffeeStore.imgUrl}
-                                                    name={coffeeStore.name}
-                                                    key={coffeeStore.id}
+                                                    id={box.fsq_id}
+                                                    imgUrl={box.unsplashImages}
+                                                    name={box.name}
+                                                    key={box.fsq_id}
+                                                    location={box.location}
                                                 />
                                             )
                                 })

@@ -1,24 +1,22 @@
-import { useRouter } from "next/router"
-import coffeeStoreData from "../../data/coffee-stores.json"
+import { useRouter } from "next/router";
+import Card from "../../components/Card";
+import { getCoffeeStores } from "../../lib/coffee-store.js"
 
-import Card from '../../components/Card'
+import CardStyle from "../../styles/card.module.css"
 
-import cardStyle from '../../styles/card.module.css'
+import cls from "classnames"
 
+function redirectHome() {
+    window.location.href = '/'
+}
 
-export async function getStaticPaths () {
-   /* set dyanamic paths & remove manually updates */
-   /** 
-    * Note: fallback-false then any path not return by getStaticPath() will return 404 page
-    * */ 
-
-   const paths = coffeeStoreData.map(store => {
-    return {
-                params:  {
-                            storeId: store.storeId 
-                        }
+export async function getStaticPaths() {
+    let coffeeStores = await getCoffeeStores()
+    let paths = coffeeStores.map(store => {
+        return {
+                params: { storeId: `${store.fsq_id}` }
             }
-   })
+    })
 
     return {
         paths,
@@ -27,31 +25,41 @@ export async function getStaticPaths () {
 }
 
 
-export function getStaticProps (coffeeStore) {
-    let parmId = coffeeStore.params.storeId
+export async function getStaticProps(params) {
+    let coffeeStores = await getCoffeeStores()
+    let box = coffeeStores.find(coffeestore => coffeestore.fsq_id == params.params.storeId)
+
     return {
-                props: {
-                        coffeeStore: coffeeStoreData.find(store  => {
-                            return store.storeId == parmId
-                        })
-                    }
-            }
+        props: {
+            coffeeStore: box
+        }
+    }
 }
 
-export default function storeId ({coffeeStore}) {
-    // console.log(getStaticPaths.fallback);
+
+const storeId = ({coffeeStore}) => {
+    const router = useRouter()
     return (
-                <>
-                    <a href="http://localhost:3000/"> 
-                        <button className="return-btn">Return to Home </button>
-                    </a>
-                    <br />
-                    <div id={cardStyle.cardSingle}>
-                        <Card
-                        name={coffeeStore.name}
-                        id={coffeeStore.storeId}
-                        imgUrl={coffeeStore.imgUrl}/>
-                    </div>
-                </>
-            )
+        <>
+            <div className={cls(`${CardStyle.cardwrapper}`)}>
+                <button
+                onClick={redirectHome}
+                className={cls(CardStyle.btn, CardStyle.btnback, CardStyle.btnwhite)}> 
+                Back
+                </button>
+                <div id={CardStyle.cardSingle}>
+                    <Card 
+                    id={coffeeStore.fsq_id}
+                    imgUrl={coffeeStore.unsplashImages}
+                    name={coffeeStore.name}
+                    key={coffeeStore.fsq_id}
+                    location={coffeeStore.location}
+                />
+            </div>
+           </div>
+        </>
+    )
 }
+
+
+export default storeId

@@ -10,3 +10,7 @@ package-lock.json
 # configurations
 tsconfig.json
 
+
+.env.local
+
+.gitignore
