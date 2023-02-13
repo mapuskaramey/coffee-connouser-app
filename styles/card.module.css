@@ -1,0 +1,113 @@
+.card {
+    min-height: 200px;
+    max-height: fit-content;
+    border: solid 1px #fff;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px -1px #727272; 
+    color: inherit;
+    text-decoration: none;
+    border-radius: 15%;
+    padding: 12%;
+}
+.card:hover,
+.card:focus,
+.card:active {
+    color: #0070f3;
+    border-color: #0070f3;
+}
+.cardTitle {
+    display: flex;
+    justify-content: center;
+}
+.cardTitle h2 {
+    font-size: 14px;
+    color: #333;
+    padding: 12px 0;
+    display: block;
+    text-transform: capitalize;
+}
+.cardImage {
+    display: block;
+    box-sizing: content-box;
+}
+.cardImage img {
+    border-radius: 15%;
+}
+.card h2 {
+margin: 0 0 1rem 0;
+font-size: 1.2rem !important;
+}
+.card p {
+margin: 0;
+font-size: 1.25rem;
+line-height: 1.5;
+}
+.cardLayout {
+display: grid;
+grid-template-columns: repeat(3,minmax(0,1fr))
+}
+.cardLocation {
+    font-size: .8rem;
+}
+
+
+.cardLayout .card {
+margin: 12px;
+}
+#cardSingle {
+    position: relative;
+    width: 27.333%;
+    margin: 2em;
+}
+#cardSingle a {
+    display: block;
+    width: 100%;
+}
+#cardSingle .card {
+    padding: 2rem;
+    width: fit-content;
+}
+#cardSingle p {
+    font-size: .8rem;
+    color: #555;
+    display: block;
+    text-align: center;
+}
+
+/* button card */
+.btn {
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px -1px #727272;
+    width: 80px;
+    height: 40px;
+    border: 0px
+}
+.btn .btnback {
+    text-align: center;
+}
+.btnwhite {
+    background-color: #fff;
+    color: #333
+}
+.cardwrapper {
+    position: relative;
+    padding: 2em;
+}
+
+
+
+/* media query css */
+@media (max-width:992px) {
+    .cardLayout {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr))
+    }
+}
+@media (max-width:664px) {
+    .cardLayout {
+        display: grid;
+        grid-template-columns: repeat(1,minmax(0,1fr))
+    }
+}
+  

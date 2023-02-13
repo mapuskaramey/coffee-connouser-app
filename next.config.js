@@ -2,7 +2,7 @@
 
 const nextConfig =  {
   reactStrictMode: false,
-  swcMinify: true,
+  swcMinify: false,
 
   async headers() {
     return [
@@ -18,6 +18,14 @@ const nextConfig =  {
       }
 
     ]
-  }
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com'
+      },
+    ],
+  },
 }
 module.exports = nextConfig
