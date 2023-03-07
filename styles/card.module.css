@@ -1,9 +1,12 @@
+.boxName {
+    color: #fff;
+}
 .card {
+    background-color: #fff;
     min-height: 200px;
     max-height: fit-content;
     border: solid 1px #fff;
     box-sizing: border-box;
-    box-shadow: 0 0 5px -1px #727272; 
     color: inherit;
     text-decoration: none;
     border-radius: 15%;
@@ -12,8 +15,9 @@
 .card:hover,
 .card:focus,
 .card:active {
-    color: #0070f3;
-    border-color: #0070f3;
+    color: #222;
+    border-color: #222;
+    box-shadow: 0 0 15px -10px #727272; 
 }
 .cardTitle {
     display: flex;
@@ -55,9 +59,10 @@ grid-template-columns: repeat(3,minmax(0,1fr))
 margin: 12px;
 }
 #cardSingle {
+    display: inline-block;
+    margin: 1em .6em;
     position: relative;
     width: 27.333%;
-    margin: 2em;
 }
 #cardSingle a {
     display: block;
@@ -74,7 +79,14 @@ margin: 12px;
     text-align: center;
 }
 
-/* button card */
+/* button card starts */
+.buttonwrapper {
+    display: block;
+    position: relative;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: flex-start;
+}
 .btn {
     position: relative;
     box-sizing: border-box;
@@ -90,10 +102,45 @@ margin: 12px;
     background-color: #fff;
     color: #333
 }
+.cardglassBox .buttonVote {
+    height: 34px;
+    width: 150px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000; 
+}
+.buttonVote:hover, .buttonVote:focus, .buttonVote:visited {
+    -webkit-box-shadow: 0px -2px 19px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -2px 19px -4px rgba(0,0,0,0.75);
+    box-shadow: 0px -2px 19px -4px rgba(0,0,0,0.75);
+}
+/* button card ends */
 .cardwrapper {
     position: relative;
     padding: 2em;
 }
+
+/* glass effect starts */
+.cardglass {
+/* From https://css.glass */
+background: rgba(252, 255, 248, 0.15);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(14.7px);
+-webkit-backdrop-filter: blur(14.7px);
+}
+.cardglassBox {
+    display: inline-block;
+    height: 200px;
+    background: transparent;
+    position: relative;
+    top: -100px;
+    right: -50px;
+    width: 500px;
+}
+.h100 { height: 200px; width: inherit;}
+.margin2 { padding: 2em }
+/* glass effect ends */
 
 
 
