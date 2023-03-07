@@ -6,7 +6,6 @@ const nextConfig =  {
 
   async headers() {
     return [
-
       {
         source: '/contact',
         headers: [
@@ -16,7 +15,6 @@ const nextConfig =  {
                     }
                 ],
       }
-
     ]
   },
   images: {

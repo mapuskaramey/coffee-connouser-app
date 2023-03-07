@@ -5,6 +5,7 @@ import { getCoffeeStores } from "../../lib/coffee-store.js"
 import CardStyle from "../../styles/card.module.css"
 
 import cls from "classnames"
+import Rating from "../../components/Rating";
 
 function redirectHome() {
     window.location.href = '/'
@@ -14,14 +15,14 @@ export async function getStaticPaths() {
     let coffeeStores = await getCoffeeStores()
     let paths = coffeeStores.map(store => {
         return {
-                params: { storeId: `${store.fsq_id}` }
-            }
+                    params: { storeId: `${store.fsq_id}` }
+                }
     })
 
     return {
-        paths,
-        fallback: false
-    }
+                paths,
+                fallback: false
+            }  
 }
 
 
@@ -42,11 +43,16 @@ const storeId = ({coffeeStore}) => {
     return (
         <>
             <div className={cls(`${CardStyle.cardwrapper}`)}>
-                <button
-                onClick={redirectHome}
-                className={cls(CardStyle.btn, CardStyle.btnback, CardStyle.btnwhite)}> 
-                Back
-                </button>
+                <div
+                className={CardStyle.buttonwrapper}>
+                    <button
+                    onClick={redirectHome}
+                    className={cls(CardStyle.btn, CardStyle.btnback, CardStyle.btnwhite, 'left')}> 
+                    Back
+                    </button>
+                </div>
+                
+
                 <div id={CardStyle.cardSingle}>
                     <Card 
                     id={coffeeStore.fsq_id}
@@ -54,8 +60,16 @@ const storeId = ({coffeeStore}) => {
                     name={coffeeStore.name}
                     key={coffeeStore.fsq_id}
                     location={coffeeStore.location}
-                />
-            </div>
+                    />
+                </div>
+                <div className={cls(CardStyle.cardglassBox, CardStyle.cardglass)}>
+                    <div className={cls(CardStyle.cardglass, CardStyle.h100, CardStyle.margin2)}>
+                        <Rating 
+                        location={coffeeStore.location}
+                        likes={coffeeStore.unsplashImages.likes}></Rating>
+                        <button className={CardStyle.buttonVote}>submit my choice!</button>
+                    </div>
+                </div>
            </div>
         </>
     )

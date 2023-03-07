@@ -1,16 +1,14 @@
-# Build packages
+# Build packages & private files
 node_modules
 .next
+.env.local
+.gitignore
 
 
 # package-lock file
 package-lock.json
 
-
 # configurations
 tsconfig.json
 
 
-.env.local
-
-.gitignore
