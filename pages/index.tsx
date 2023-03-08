@@ -14,24 +14,12 @@ import SEO from '../components/seo'
 import { getCoffeeStores } from '../lib/coffee-store.js'
 import Link from 'next/link'
 
+import TrackLocation from '../hooks/track-location'
+
+
 
 const getCoffeeStoresNearBy = () => {
-
-    if(!navigator.geolocation) {
-        console.log('Browser donesn\'t  supported for Geolocation, Please try with next browser!')
-    } else {
-        navigator.geolocation.getCurrentPosition(success, error)
-    }
-
-    function success(position){
-        let lat= position.coords.latitude
-        let long= position.coords.longitde
-        console.log(`${lat}: latitude, ${long}: longitute`)
-    }
-
-    function error(e) {
-        console.log(`opps! someting went wrong failed to locate your location! ${e}`)
-    }
+    TrackLocation()
 }
 
 /* pre-render content @build time using props returned by getStaticProps() */
@@ -49,6 +37,7 @@ export async function getStaticProps() {
 /**  client side  */
 export default function Home(props) {
 let boxes = props.coffeeStores
+
   return (
         <div className={styles.container}>
             <main className={styles.main}>
@@ -66,7 +55,7 @@ let boxes = props.coffeeStores
                         <p 
                         className={styles.subTitle}
                         >
-                        Discover your local coffee stores!
+                        Discover local coffee stores!
                         </p>
                     </div>
                     <div className={styles.right}>
@@ -74,7 +63,7 @@ let boxes = props.coffeeStores
                         className={styles.discoverBtn}
                         onClick={getCoffeeStoresNearBy}
                         >
-                            Discover your local coffee stores
+                            Discover coffee stores near me!
                         </button>
                     </div>
                 </div>
