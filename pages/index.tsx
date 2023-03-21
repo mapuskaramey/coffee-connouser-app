@@ -15,12 +15,13 @@ import SEO from '../components/seo'
 import { getCoffeeStores } from '../lib/coffee-store.js'
 import Link from 'next/link'
 import trackMyLocation from '../hooks/track-my-location'
-
+import { useEffect, useState } from 'react'
 
 /* pre-render content @build time using props returned by getStaticProps() */
 export async function getStaticProps() {
     /** coffee connouiser api configuration */
     let FSQData = await getCoffeeStores()
+    console.log({FSQData})
     return {
         props: {
             coffeeStores: FSQData
@@ -30,16 +31,22 @@ export async function getStaticProps() {
 
 /**  client side  */
 export default function Home(props) {
+    
+    const { trackMyLocationHandler, latLong, locationErrorMsg, isTrackLocationOn } = trackMyLocation()
 
-    const { trackMyLocationHandler, latLong } = trackMyLocation()
-
+    /* I was stuck in this scenario where data get de-structured & need to print here,
+        mistakes:
+        I. I was try to call latLong, errorMsg inside getCoffeeStoreNearBy() function which was wrong, hence 
+        I was getting data on 2nd click of button
+        II. I was calling Hooks on TOP of getStaticProps() function which was wrong, It should call inside function component 
+    */
+   
     const getCoffeeStoreNearBy = () => {
         trackMyLocationHandler()
-        console.log({latLong})
+        console.log({latLong, locationErrorMsg })
     }
-    
-    let boxes = props.coffeeStores
 
+    let boxes = props.coffeeStores
     return (
             <div className={styles.container}>
                 <main className={styles.main}>
@@ -65,12 +72,17 @@ export default function Home(props) {
                             className={styles.discoverBtn}
                             onClick={getCoffeeStoreNearBy}
                             >
-                                Discover coffee stores near me!
+                                {
+                                    (!!isTrackLocationOn)?  'locating...': 'Discover coffee stores near me!'
+                                    
+                                }
                             </button>
                         </div>
                     </div>
                     <div className='box'>
-                        <p id='cardFetch' ></p>
+                        <p id='cardFetch'>
+                            {locationErrorMsg}
+                        </p>
                         <h2 
                         className={CardStyle.boxName}
                         >

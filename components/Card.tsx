@@ -2,7 +2,9 @@ import cardStyle from '../styles/card.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 
+
 export default function Card ({id, imgUrl, name, location}) {
+    
     let {alt_description, urls} = imgUrl
     return (
                 <>
