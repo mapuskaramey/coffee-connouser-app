@@ -1,4 +1,4 @@
-import cardStyle from '../styles/card.module.css'
+import cardStyle from '../../styles/card.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 
