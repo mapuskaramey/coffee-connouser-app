@@ -1,4 +1,4 @@
-# --- Routes notes
+# ---- Routes notes
 # When a file is added to the pages directory, it's automatically available as a route
 # Client-side navigations to dynamic routes are handled with next/link
 # Dynamic routes can be extended to catch all paths by adding three dots (...) inside the brackets. eg. Note: You can use names other than slug, such as: [...param]
@@ -25,16 +25,21 @@
     - getStaticProps runs in the background when using `fallback: true`
     - getStaticProps is called before initial render when using `fallback: blocking`
 
-# ----- getLocation
+# ---- getLocation
     # vanilla javascript
+
+
+# ---- Note: .env.local
+# environment variables specified in this way will always be included in the JavaScript bundle, prefixing the environment variable name with NEXT_PUBLIC_ only has an effect when specifying them through the environment or .env files.
+
+
+# ---- Study Tools
+# next js code elimination [ https://next-code-elimination.vercel.app ]
+
+
+
+
 
 
 # ---- Error
 while success / failed api response in return object `coffeeStoreData` error, code, message property has been added
-
-
-
-
-
-# --- Study Tools
-# next js code elimination [ https://next-code-elimination.vercel.app ]
