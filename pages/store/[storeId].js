@@ -5,14 +5,18 @@ import { getCoffeeStores } from "../../lib/coffee-store.js"
 import CardStyle from "../../styles/card.module.css"
 
 import cls from "classnames"
-import Rating from "../../components/Rating";
+import Rating from "../../components/Rating"
+import CoffeeStorePayloads from '../../components/common/CoffeeStorePayloads'
+
+
+const { FSQueryParams, UnsplashQueryParams } = CoffeeStorePayloads()
 
 function redirectHome() {
     window.location.href = '/'
 }
 
 export async function getStaticPaths() {
-    let coffeeStores = await getCoffeeStores()
+    let coffeeStores = await getCoffeeStores(FSQueryParams, UnsplashQueryParams)
     let paths = coffeeStores.map(store => {
         return {
             params: { storeId: `${store.fsq_id}` }
@@ -26,7 +30,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(params) {
-    let coffeeStores = await getCoffeeStores()
+    let coffeeStores = await getCoffeeStores(FSQueryParams, UnsplashQueryParams)
     let box = coffeeStores.find(coffeestore => coffeestore.fsq_id == params.params.storeId)
 
     return {
@@ -37,6 +41,7 @@ export async function getStaticProps(params) {
 }
 
 const storeId = ({ coffeeStore }) => {
+    console.log({coffeeStore})
     const router = useRouter()
     return (
         <>

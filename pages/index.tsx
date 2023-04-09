@@ -16,20 +16,9 @@ import { getCoffeeStores, callUnsplashAPI, callFSQAPI } from '../lib/coffee-stor
 import Link from 'next/link'
 import trackMyLocation from '../hooks/track-my-location'
 import { useEffect, useState } from 'react'
+import CoffeeStorePayloads from '../components/common/CoffeeStorePayloads'
 
-
-let FSQueryParams = {
-    searchText: 'coffee store',
-    latlong: process.env.NEXT_PUBLIC_INIT_LATLONG,
-    limit: 30
-}
-
-let UnsplashQueryParams = {
-    query: 'coffee store',
-    page: 1,
-    perPage: 30,
-    color: 'black_and_white'
-}
+const { FSQueryParams, UnsplashQueryParams } = CoffeeStorePayloads()
 
 /* pre-render content @build time using props returned by getStaticProps() */
 export async function getStaticProps() {
@@ -37,7 +26,9 @@ export async function getStaticProps() {
     return {
         props: {
             coffeeStores: FSQData
-        }
+        },
+        revalidate: 5,
+        notFound: false
     }
 }
 
@@ -45,9 +36,9 @@ export async function getStaticProps() {
 export default function Home(props) {
     const [coffeeStoreNearMe, setCoffStoreNearMe] = useState('')
     const { trackMyCurrentLocationHandler, locationErrorMsg, latLong, isTrackLocationLocating } = trackMyLocation()
-
+    
     let buttonText = (isTrackLocationLocating == 'false') ? 'Discover coffee stores near me!!' : 'locating...'
-    let cardTitle = (latLong)? 'Coffee stores near to you':'Coffee stores'
+    let cardTitle = (latLong) ? 'Coffee stores near to you' : 'Coffee stores'
     let coffeeStoresList = props.coffeeStores
     let boxes = ''
 
@@ -62,7 +53,9 @@ export default function Home(props) {
         coffeeStores = await getCoffeeStores(queryParams, UnsplashQueryParams)
         setCoffStoreNearMe(coffeeStores)
     }
+
     boxes = latLong ? coffeeStoreNearMe : coffeeStoresList
+
     return (
         <div className={styles.container}>
             <main className={styles.main}>
