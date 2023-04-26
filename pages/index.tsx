@@ -1,28 +1,35 @@
 import Image from 'next/image'
+import Link from 'next/link'
+
+import { useState } from 'react'
 
 import styles from '../styles/Home.module.css'
 import CardStyle from '../styles/card.module.css'
 
 import Footer from '../components/Footer'
 import Header from '../components/Head'
-
 import Card from '../components/common/Card'
+import SEO from '../components/seo'
+import CoffeeStorePayloads from '../components/common/CoffeeStorePayloads'
+
 import CoffeeStoresData from '../data/coffee-stores.json'
+
+import { getCoffeeStores } from '../lib/coffee-store.js'
+
+import trackMyLocation from '../hooks/track-my-location'
 
 import cls from 'classnames'
 
-import SEO from '../components/seo'
-import { getCoffeeStores, callUnsplashAPI, callFSQAPI } from '../lib/coffee-store.js'
-import Link from 'next/link'
-import trackMyLocation from '../hooks/track-my-location'
-import { useEffect, useState } from 'react'
-import CoffeeStorePayloads from '../components/common/CoffeeStorePayloads'
+
 
 const { FSQueryParams, UnsplashQueryParams } = CoffeeStorePayloads()
-
-/* pre-render content @build time using props returned by getStaticProps() */
+/* 
+*    To pre-render content, @ Build time getStaticProps method used which returns props: {} as object with some data
+*/
 export async function getStaticProps() {
-    let FSQData = await getCoffeeStores(FSQueryParams, UnsplashQueryParams)
+
+    let FSQData = await getCoffeeStores()
+
     return {
         props: {
             coffeeStores: FSQData
@@ -32,9 +39,13 @@ export async function getStaticProps() {
     }
 }
 
-/**  client side  */
+/*
+* client side rendering
+*/
 export default function Home(props) {
-    const [coffeeStoreNearMe, setCoffStoreNearMe] = useState('')
+
+    const [coffeeStoreNearMe, setCoffStoreNearMe] = useState(props)
+
     const { trackMyCurrentLocationHandler, locationErrorMsg, latLong, isTrackLocationLocating } = trackMyLocation()
     
     let buttonText = (isTrackLocationLocating == 'false') ? 'Discover coffee stores near me!!' : 'locating...'
@@ -50,11 +61,12 @@ export default function Home(props) {
             latlong: latLong,
             limit: 2
         }
-        coffeeStores = await getCoffeeStores(queryParams, UnsplashQueryParams)
+        coffeeStores = await getCoffeeStores()
         setCoffStoreNearMe(coffeeStores)
     }
 
-    boxes = latLong ? coffeeStoreNearMe : coffeeStoresList
+    // boxes = latLong ? coffeeStoreNearMe : coffeeStoresList
+    boxes = coffeeStoreNearMe.coffeeStores
 
     return (
         <div className={styles.container}>
