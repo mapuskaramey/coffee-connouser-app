@@ -44,29 +44,28 @@ export async function getStaticProps() {
 */
 export default function Home(props) {
 
-    const [coffeeStoreNearMe, setCoffStoreNearMe] = useState(props)
+    const [coffeeStoreNearMe, setCoffStoreNearMe] = useState(props.coffeeStores)
 
     const { trackMyCurrentLocationHandler, locationErrorMsg, latLong, isTrackLocationLocating } = trackMyLocation()
     
     let buttonText = (isTrackLocationLocating == 'false') ? 'Discover coffee stores near me!!' : 'locating...'
     let cardTitle = (latLong) ? 'Coffee stores near to you' : 'Coffee stores'
-    let coffeeStoresList = props.coffeeStores
     let boxes = ''
 
     const discoverCoffeeStoresNearByLocation = async () => {
         let coffeeStores = ''
-        trackMyCurrentLocationHandler()
+        await trackMyCurrentLocationHandler()
         let queryParams = {
             searchText: 'coffee store',
             latlong: latLong,
             limit: 2
         }
-        coffeeStores = await getCoffeeStores()
+        coffeeStores = await getCoffeeStores(queryParams)
         setCoffStoreNearMe(coffeeStores)
     }
 
     // boxes = latLong ? coffeeStoreNearMe : coffeeStoresList
-    boxes = coffeeStoreNearMe.coffeeStores
+    boxes = coffeeStoreNearMe
 
     return (
         <div className={styles.container}>
